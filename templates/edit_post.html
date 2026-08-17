@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Post Edit Karein{% endblock %}
+
+{% block content %}
+    <h1>Post Edit Karein</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class="flash">{{ msg }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="{{ post.title }}"><br><br>
+
+        <label for="body">Body:</label><br>
+        <textarea id="body" name="body" rows="8" cols="50">{{ post.body }}</textarea><br><br>
+
+        <button type="submit">Changes Save Karein</button>
+    </form>
+{% endblock %}

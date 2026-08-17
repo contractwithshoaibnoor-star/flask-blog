@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome to My Blog</h1>
+    <p><a href="{{ url_for('new_post') }}">+ Naya Post Likhein</a></p>
+    {% for post in posts %}
+        <div class="post-preview">
+            <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <small>{{ post.created_at.strftime('%d %b %Y') }}</small>
+            <p>{{ post.body[:100] }}...</p>
+        </div>
+        <hr>
+    {% else %}
+        <p>Abhi koi post nahi hai.</p>
+    {% endfor %}
+{% endblock %}
