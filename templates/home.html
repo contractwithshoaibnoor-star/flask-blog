@@ -3,16 +3,30 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome to My Blog</h1>
-    <p><a href="{{ url_for('new_post') }}">+ Naya Post Likhein</a></p>
-    {% for post in posts %}
-        <div class="post-preview">
-            <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <small>{{ post.created_at.strftime('%d %b %Y') }}</small>
-            <p>{{ post.body[:100] }}...</p>
-        </div>
-        <hr>
-    {% else %}
-        <p>Abhi koi post nahi hai.</p>
-    {% endfor %}
+<div class="page-header">
+    <div>
+        <h1>Latest Posts</h1>
+        <p class="subtitle">A simple CRUD blog built with Flask and SQLite.</p>
+    </div>
+    <a class="button" href="{{ url_for('new_post') }}">+ New Post</a>
+</div>
+
+{% if posts %}
+    <div class="post-list">
+        {% for post in posts %}
+            <article class="post-card">
+                <div class="meta">{{ post.created_at.strftime('%d %b %Y') }}</div>
+                <h2><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <p>{{ post.body[:140] }}{% if post.body|length > 140 %}...{% endif %}</p>
+                <a href="{{ url_for('post_detail', post_id=post.id) }}">Read post →</a>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <h2>No posts yet</h2>
+        <p class="subtitle">Create your first blog post to get started.</p>
+        <a class="button" href="{{ url_for('new_post') }}">Create Post</a>
+    </div>
+{% endif %}
 {% endblock %}
